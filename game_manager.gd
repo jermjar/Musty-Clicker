@@ -2,6 +2,11 @@ extends Node
 
 const save_path = "user://save_data.json"
 var save_data: Dictionary
+var cosmetic_data: Dictionary = {
+	Cosmetics.DEFAULT: true,
+	Cosmetics.INCREDIBLE_GASSY: false,
+	Cosmetics.KAPPA: false
+}
 
 enum OfflineHours {
 	ZERO = 0,
@@ -14,6 +19,15 @@ enum OfflineHours {
 	SEVEN = 7,
 	EIGHT = 8
 }
+enum Cosmetics {
+	DEFAULT,
+	INCREDIBLE_GASSY,
+	KAPPA
+}
+
+@export var default_sprite: CompressedTexture2D
+@export var incredible_gassy_sprite: CompressedTexture2D
+@export var kappa_sprite: CompressedTexture2D
 
 @onready var points_label: RichTextLabel = %PointsLabel
 @onready var per_second_label: RichTextLabel = %PerSecondLabel
@@ -26,6 +40,13 @@ enum OfflineHours {
 @onready var click_upgrade_button: Button = %ClickUpgradeButton
 @onready var pps_upgrade_button: Button = %PPSUpgradeButton
 @onready var offline_upgrade_button: Button = %OfflineUpgradeButton
+
+@onready var upgrade_foldable_container: FoldableContainer = %UpgradeFoldableContainer
+@onready var cosmetic_foldable_container: FoldableContainer = %CosmeticFoldableContainer
+
+@onready var default_button: Button = %DefaultButton
+@onready var incredible_gassy_button: Button = %IncredibleGassyButton
+@onready var kappa_button: Button = %KappaButton
 
 var points: float = 0.0
 var offline_points: float = 0.0
@@ -43,6 +64,7 @@ var offline_upgrade_scale: int = 15000
 
 var offline_hours: OfflineHours = OfflineHours.ZERO
 var offline_button_disabled: bool = false
+var current_skin: Cosmetics = Cosmetics.DEFAULT
 
 func _ready() -> void:
 	load_game()
@@ -56,9 +78,15 @@ func _ready() -> void:
 	pps_upgrade_button.button_down.connect(_on_pps_upgrade_button_down)
 	offline_upgrade_button.button_down.connect(_on_offline_upgrade_button_down)
 	
+	default_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.DEFAULT))
+	incredible_gassy_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.INCREDIBLE_GASSY))
+	kappa_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.KAPPA))
+	
 	# Initialize labels
 	update_labels()
 	update_upgrade_text()
+	update_cosmetic(current_skin)
+	update_cosmetic_labels()
 
 func _process(delta: float) -> void:
 	points += points_per_second * delta
@@ -78,6 +106,49 @@ func update_labels() -> void:
 	points_label.text = "%s points" % [int(points)]
 	per_second_label.text = "per second:  %s" % [points_per_second]
 	per_click_label.text = "per click:  %s" % [points_per_click]
+
+func update_cosmetic(skin: Cosmetics) -> void:
+	match skin:
+		Cosmetics.DEFAULT:
+			default_button.text = "EQUIPPED"
+			click_button.texture_normal = default_sprite
+			default_button.disabled = true
+			current_skin = skin
+		Cosmetics.INCREDIBLE_GASSY:
+			incredible_gassy_button.text = "EQUIPPED"
+			click_button.texture_normal = incredible_gassy_sprite
+			incredible_gassy_button.disabled = true
+			current_skin = skin
+		Cosmetics.KAPPA:
+			kappa_button.text = "EQUIPPED"
+			click_button.texture_normal = kappa_sprite
+			kappa_button.disabled = true
+			current_skin = skin
+
+func update_cosmetic_labels() -> void:
+	if cosmetic_data[Cosmetics.DEFAULT]:
+		if current_skin == Cosmetics.DEFAULT:
+			default_button.text = "EQUIPPED"
+			default_button.disabled = true
+		else:
+			default_button.text = "EQUIP"
+			default_button.disabled = false
+	
+	if cosmetic_data[Cosmetics.INCREDIBLE_GASSY]:
+		if current_skin == Cosmetics.INCREDIBLE_GASSY:
+			incredible_gassy_button.text = "EQUIPPED"
+			incredible_gassy_button.disabled = true
+		else:
+			incredible_gassy_button.text = "EQUIP"
+			incredible_gassy_button.disabled = false
+	
+	if cosmetic_data[Cosmetics.KAPPA]:
+		if current_skin == Cosmetics.KAPPA:
+			kappa_button.text = "EQUIPPED"
+			kappa_button.disabled = true
+		else:
+			kappa_button.text = "EQUIP"
+			kappa_button.disabled = false
 
 func display_offline_points_label() -> void:
 	offline_points_label.text = "You earned %s points while away!" % [int(offline_points)]
@@ -137,6 +208,23 @@ func _on_offline_upgrade_button_down() -> void:
 				offline_upgrade_button.disabled = offline_button_disabled
 		update_upgrade_text()
 
+func _on_cosmetic_button_down(skin: Cosmetics) -> void:
+	match skin:
+		Cosmetics.DEFAULT:
+			update_cosmetic(skin)
+			cosmetic_data[Cosmetics.DEFAULT] = true
+		Cosmetics.INCREDIBLE_GASSY:
+			if points >= int(incredible_gassy_button.text):
+				points -= int(incredible_gassy_button.text)
+				update_cosmetic(skin)
+				cosmetic_data[Cosmetics.INCREDIBLE_GASSY] = true
+		Cosmetics.KAPPA:
+			if points >= int(kappa_button.text):
+				points -= int(kappa_button.text)
+				update_cosmetic(skin)
+				cosmetic_data[Cosmetics.KAPPA] = true
+	update_cosmetic_labels()
+
 func _on_menu_button_down() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 #endregion
@@ -152,7 +240,11 @@ func save_game() -> void:
 		"pps_upgrade_amount": pps_upgrade_amount,
 		"offline_upgrade_amount": offline_upgrade_amount,
 		"offline_hours": offline_hours,
-		"offline_button_disabled": offline_button_disabled
+		"offline_button_disabled": offline_button_disabled,
+		"current_skin": current_skin,
+		"cosmetic_data": var_to_str(cosmetic_data),
+		"upgrade_foldable": upgrade_foldable_container.folded,
+		"cosmetic_foldable": cosmetic_foldable_container.folded
 	}
 	var file_access: FileAccess = FileAccess.open(save_path, FileAccess.WRITE)
 	file_access.store_string(JSON.stringify(save_data, "\t", false))
@@ -173,6 +265,10 @@ func load_game() -> void:
 		offline_hours = save_data["offline_hours"]
 		offline_button_disabled = save_data["offline_button_disabled"]
 		offline_upgrade_button.disabled = offline_button_disabled
+		current_skin = save_data["current_skin"]
+		cosmetic_data = str_to_var(save_data["cosmetic_data"])
+		upgrade_foldable_container.folded = save_data["upgrade_foldable"]
+		cosmetic_foldable_container.folded = save_data["cosmetic_foldable"]
 		
 		var current_time = Time.get_unix_time_from_system()
 		var elapsed = current_time - save_data["last_saved_time"]

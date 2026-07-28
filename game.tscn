@@ -1,11 +1,16 @@
 [gd_scene format=3 uid="uid://c0tlpmol6slto"]
 
 [ext_resource type="Script" uid="uid://d02falal1fhpf" path="res://game_manager.gd" id="1_80nbo"]
-[ext_resource type="Texture2D" uid="uid://di81xrqja3uny" path="res://icon.svg" id="2_e2o6t"]
+[ext_resource type="Texture2D" uid="uid://di81xrqja3uny" path="res://art/icon.svg" id="2_e2o6t"]
+[ext_resource type="Texture2D" uid="uid://b1bunfjkttjfa" path="res://art/incredible-gassy.png" id="2_fc0e3"]
 [ext_resource type="Script" uid="uid://vsyvypircr3w" path="res://click_center_container.gd" id="2_feb5d"]
+[ext_resource type="Texture2D" uid="uid://2oskionc1475" path="res://art/kappa.png" id="4_7jktm"]
 
 [node name="Game" type="Node" unique_id=2034408797]
 script = ExtResource("1_80nbo")
+default_sprite = ExtResource("2_e2o6t")
+incredible_gassy_sprite = ExtResource("2_fc0e3")
+kappa_sprite = ExtResource("4_7jktm")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=891288190]
 
@@ -35,6 +40,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "0 points"
 fit_content = true
@@ -46,6 +52,7 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "per second:  0"
 fit_content = true
@@ -57,6 +64,7 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "per click:  0"
 fit_content = true
@@ -94,27 +102,38 @@ script = ExtResource("2_feb5d")
 
 [node name="Click_TextureButton" type="TextureButton" parent="UI/Click_CenterContainer" unique_id=1998159159]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 128)
+custom_maximum_size = Vector2(128, 128)
 layout_mode = 2
 texture_normal = ExtResource("2_e2o6t")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=141659802]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=1809763926]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -60.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_top = -140.0
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_vertical = 3
+alignment = 2
 
-[node name="ClickUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer" unique_id=1480060794]
+[node name="UpgradeFoldableContainer" type="FoldableContainer" parent="UI/VBoxContainer" unique_id=1248534015]
+unique_name_in_owner = true
+layout_mode = 2
+folded = true
+title = "Upgrades"
+title_position = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer" unique_id=141659802]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ClickUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/ClickUpgradeContainer" unique_id=1650268280]
+[node name="ClickUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer" unique_id=1480060794]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ClickUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/ClickUpgradeContainer" unique_id=1650268280]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -123,18 +142,18 @@ bbcode_enabled = true
 text = "Click Upgrade"
 scroll_active = false
 
-[node name="ClickUpgradeButton" type="Button" parent="UI/VBoxContainer/ClickUpgradeContainer" unique_id=2027572339]
+[node name="ClickUpgradeButton" type="Button" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/ClickUpgradeContainer" unique_id=2027572339]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0
 "
 
-[node name="PPSUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer" unique_id=283949520]
+[node name="PPSUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer" unique_id=283949520]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PPSUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/PPSUpgradeContainer" unique_id=57526179]
+[node name="PPSUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/PPSUpgradeContainer" unique_id=57526179]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -142,17 +161,17 @@ size_flags_stretch_ratio = 3.0
 text = "Points Per Second Upgrade"
 scroll_active = false
 
-[node name="PPSUpgradeButton" type="Button" parent="UI/VBoxContainer/PPSUpgradeContainer" unique_id=594306379]
+[node name="PPSUpgradeButton" type="Button" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/PPSUpgradeContainer" unique_id=594306379]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0"
 
-[node name="OfflinePointsUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer" unique_id=516894294]
+[node name="OfflinePointsUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer" unique_id=516894294]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="OfflineUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/OfflinePointsUpgradeContainer" unique_id=888007426]
+[node name="OfflineUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/OfflinePointsUpgradeContainer" unique_id=888007426]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -160,8 +179,74 @@ size_flags_stretch_ratio = 3.0
 text = "Offline Hours Upgrade (1 Hour)"
 scroll_active = false
 
-[node name="OfflineUpgradeButton" type="Button" parent="UI/VBoxContainer/OfflinePointsUpgradeContainer" unique_id=140464091]
+[node name="OfflineUpgradeButton" type="Button" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/OfflinePointsUpgradeContainer" unique_id=140464091]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "0"
+
+[node name="CosmeticFoldableContainer" type="FoldableContainer" parent="UI/VBoxContainer" unique_id=622568859]
+unique_name_in_owner = true
+layout_mode = 2
+folded = true
+title = "Cosmetics"
+title_position = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer" unique_id=1880963849]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DefaultContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=40918889]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DefaultLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/DefaultContainer" unique_id=1518011293]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+bbcode_enabled = true
+text = "Default"
+scroll_active = false
+
+[node name="DefaultButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/DefaultContainer" unique_id=252369779]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="IncredibleGassyContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1682442578]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IncredibleGassyLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/IncredibleGassyContainer" unique_id=1120659939]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+bbcode_enabled = true
+text = "Incredible Gassy"
+scroll_active = false
+
+[node name="IncredibleGassyButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/IncredibleGassyContainer" unique_id=1034006223]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "20000"
+
+[node name="KappaContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=2034172948]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="KappaLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/KappaContainer" unique_id=839402207]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+bbcode_enabled = true
+text = "Kappa"
+scroll_active = false
+
+[node name="KappaButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/KappaContainer" unique_id=1578091261]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100000"

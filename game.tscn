@@ -4,15 +4,59 @@
 [ext_resource type="Texture2D" uid="uid://di81xrqja3uny" path="res://art/icon.svg" id="2_e2o6t"]
 [ext_resource type="Texture2D" uid="uid://b1bunfjkttjfa" path="res://art/incredible-gassy.png" id="2_fc0e3"]
 [ext_resource type="Script" uid="uid://vsyvypircr3w" path="res://click_center_container.gd" id="2_feb5d"]
+[ext_resource type="Texture2D" uid="uid://bc1204ilclfeo" path="res://art/blackOps1MainMenuGuy.png" id="3_vef74"]
 [ext_resource type="Texture2D" uid="uid://2oskionc1475" path="res://art/kappa.png" id="4_7jktm"]
+[ext_resource type="Shader" uid="uid://d0f5ufb5pfjps" path="res://background.gdshader" id="5_eow3j"]
+[ext_resource type="Texture2D" uid="uid://bx4nja0kfshix" path="res://art/jorin.png" id="5_j5wjh"]
+[ext_resource type="Texture2D" uid="uid://bftmqpywup1ru" path="res://art/pattern_35.png" id="6_eow3j"]
+[ext_resource type="Texture2D" uid="uid://dwdpx1w6qe88n" path="res://art/obunga4.jpg" id="7_hve3p"]
 
-[node name="Game" type="Node" unique_id=2034408797]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vef74"]
+shader = ExtResource("5_eow3j")
+shader_parameter/rotation_speed = 5.000017337500026
+shader_parameter/angle_degrees = 0.0
+shader_parameter/repeat_x = 1.0
+shader_parameter/repeat_y = 1.0
+shader_parameter/aspect_ratio = 0.5625
+shader_parameter/tint = Color(0.26666668, 0.33333334, 0.4, 1)
+
+[node name="Game" type="Node2D" unique_id=559046950]
 script = ExtResource("1_80nbo")
 default_sprite = ExtResource("2_e2o6t")
+black_ops_sprite = ExtResource("3_vef74")
 incredible_gassy_sprite = ExtResource("2_fc0e3")
 kappa_sprite = ExtResource("4_7jktm")
+hedgehog_sprite = ExtResource("5_j5wjh")
+redacted_sprite = ExtResource("7_hve3p")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=891288190]
+
+[node name="Background" type="Control" parent="UI" unique_id=973495662]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Background" unique_id=73753264]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.16078432, 0.22745098, 0.28235295, 1)
+
+[node name="TextureRect" type="TextureRect" parent="UI/Background" unique_id=1905102326]
+material = SubResource("ShaderMaterial_vef74")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_eow3j")
 
 [node name="MenuButton" type="Button" parent="UI" unique_id=434359032]
 unique_name_in_owner = true
@@ -31,8 +75,8 @@ metadata/_edit_use_anchors_ = true
 [node name="Top_VBoxContainer" type="VBoxContainer" parent="UI" unique_id=852032032]
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 25.0
-offset_bottom = 75.0
+offset_top = 46.0
+offset_bottom = 107.0
 grow_horizontal = 2
 mouse_filter = 2
 
@@ -40,9 +84,9 @@ mouse_filter = 2
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "0 points"
+text = "[outline_size=4][outline_color=black]0 points"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
@@ -52,21 +96,9 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "per second:  0"
-fit_content = true
-scroll_active = false
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PerClickLabel" type="RichTextLabel" parent="UI/Top_VBoxContainer" unique_id=1412947493]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 12
-bbcode_enabled = true
-text = "per click:  0"
+text = "[outline_size=4][outline_color=black]per second:  0"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
@@ -86,6 +118,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Click_CenterContainer" type="CenterContainer" parent="UI" unique_id=509665110]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -213,7 +246,25 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "5"
+text = "EQUIPPED"
+
+[node name="BlackOpsContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=823044568]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BlackOpsLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/BlackOpsContainer" unique_id=929727176]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+bbcode_enabled = true
+text = "Black Ops Guy"
+scroll_active = false
+
+[node name="BlackOpsButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/BlackOpsContainer" unique_id=1642404751]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5000"
 
 [node name="IncredibleGassyContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1682442578]
 layout_mode = 2
@@ -250,3 +301,39 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "100000"
+
+[node name="HedgehogContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1126017698]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HedgehogLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/HedgehogContainer" unique_id=849614434]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+bbcode_enabled = true
+text = "Hedgehog"
+scroll_active = false
+
+[node name="HedgehogButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/HedgehogContainer" unique_id=1753646286]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "500000"
+
+[node name="RedactedContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=945636237]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RedactedLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/RedactedContainer" unique_id=167684539]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+bbcode_enabled = true
+text = "[REDACTED]"
+scroll_active = false
+
+[node name="RedactedButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/RedactedContainer" unique_id=357195232]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "???"

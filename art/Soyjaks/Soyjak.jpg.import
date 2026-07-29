@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc1204ilclfeo"
-path="res://.godot/imported/blackOps1MainMenuGuy.png-1acef008b1e08b7f8e3cc3c4b472d784.ctex"
+uid="uid://bjb612q7i4mma"
+path="res://.godot/imported/Soyjak.jpg-59fa29ca8bd17c1deac3f2f5a4c6dc90.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/blackOps1MainMenuGuy.png"
-dest_files=["res://.godot/imported/blackOps1MainMenuGuy.png-1acef008b1e08b7f8e3cc3c4b472d784.ctex"]
+source_file="res://art/Soyjaks/Soyjak.jpg"
+dest_files=["res://.godot/imported/Soyjak.jpg-59fa29ca8bd17c1deac3f2f5a4c6dc90.ctex"]
 
 [params]
 

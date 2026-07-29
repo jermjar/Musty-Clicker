@@ -2,12 +2,13 @@ extends Node2D
 
 const save_path = "user://save_data.json"
 var save_data: Dictionary
+
 var cosmetic_data: Dictionary = {
-	Cosmetics.DEFAULT: true,
-	Cosmetics.BLACK_OPS: false,
-	Cosmetics.INCREDIBLE_GASSY: false,
-	Cosmetics.KAPPA: false,
-	Cosmetics.HEDGEHOG: false,
+	Cosmetics.WOJAK: true,
+	Cosmetics.SOYJAK: false,
+	Cosmetics.COBSON: false,
+	Cosmetics.CHUDJAK: false,
+	Cosmetics.GAPEJAK: false,
 	Cosmetics.REDACTED: false
 }
 
@@ -23,34 +24,35 @@ enum OfflineHours {
 	EIGHT = 8
 }
 enum Cosmetics {
-	DEFAULT,
-	BLACK_OPS,
-	INCREDIBLE_GASSY,
-	KAPPA,
-	HEDGEHOG,
+	WOJAK,
+	SOYJAK,
+	COBSON,
+	CHUDJAK,
+	GAPEJAK,
 	REDACTED
 }
 
 const LABEL_SPEED = 200
 
-@export var default_sprite: CompressedTexture2D
-@export var black_ops_sprite: CompressedTexture2D
-@export var incredible_gassy_sprite: CompressedTexture2D
-@export var kappa_sprite: CompressedTexture2D
-@export var hedgehog_sprite: CompressedTexture2D
+@export var wojak_sprite: CompressedTexture2D
+@export var soyjak_sprite: CompressedTexture2D
+@export var cobson_sprite: CompressedTexture2D
+@export var chudjak_sprite: CompressedTexture2D
+@export var gapejak_sprite: CompressedTexture2D
 @export var redacted_sprite: CompressedTexture2D
 
-@onready var default_button: Button = %DefaultButton
-@onready var black_ops_button: Button = %BlackOpsButton
-@onready var incredible_gassy_button: Button = %IncredibleGassyButton
-@onready var kappa_button: Button = %KappaButton
-@onready var hedgehog_button: Button = %HedgehogButton
+@onready var wojak_button: Button = %WojakButton
+@onready var soyjak_button: Button = %SoyjakButton
+@onready var cobson_button: Button = %CobsonButton
+@onready var chudjak_button: Button = %ChudjakButton
+@onready var gapejak_button: Button = %GapejakButton
 @onready var redacted_button: Button = %RedactedButton
 
 @onready var points_label: RichTextLabel = %PointsLabel
 @onready var per_second_label: RichTextLabel = %PerSecondLabel
 @onready var offline_points_label: RichTextLabel = %OfflinePointsLabel
 @onready var offline_upgrade_label: RichTextLabel = %OfflineUpgradeLabel
+@onready var redacted_label: RichTextLabel = %RedactedLabel
 
 @onready var click_button: TextureButton = %Click_TextureButton
 @onready var menu_button: Button = %MenuButton
@@ -77,7 +79,7 @@ var offline_upgrade_amount: int = 5000
 
 var offline_hours: OfflineHours = OfflineHours.ZERO
 var offline_button_disabled: bool = false
-var current_skin: Cosmetics = Cosmetics.DEFAULT
+var current_skin: Cosmetics = Cosmetics.WOJAK
 var show_redacted_amount: bool = false
 var stop_process_check: bool = false
 
@@ -93,11 +95,11 @@ func _ready() -> void:
 	pps_upgrade_button.button_down.connect(_on_pps_upgrade_button_down)
 	offline_upgrade_button.button_down.connect(_on_offline_upgrade_button_down)
 	
-	default_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.DEFAULT))
-	black_ops_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.BLACK_OPS))
-	incredible_gassy_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.INCREDIBLE_GASSY))
-	kappa_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.KAPPA))
-	hedgehog_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.HEDGEHOG))
+	wojak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.WOJAK))
+	soyjak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.SOYJAK))
+	cobson_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.COBSON))
+	chudjak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.CHUDJAK))
+	gapejak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.GAPEJAK))
 	redacted_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.REDACTED))
 	
 	# Initialize labels
@@ -133,30 +135,30 @@ func update_labels() -> void:
 
 func update_cosmetic(skin: Cosmetics) -> void:
 	match skin:
-		Cosmetics.DEFAULT:
-			default_button.text = "EQUIPPED"
-			click_button.texture_normal = default_sprite
-			default_button.disabled = true
+		Cosmetics.WOJAK:
+			wojak_button.text = "EQUIPPED"
+			click_button.texture_normal = wojak_sprite
+			wojak_button.disabled = true
 			current_skin = skin
-		Cosmetics.BLACK_OPS:
-			black_ops_button.text = "EQUIPPED"
-			click_button.texture_normal = black_ops_sprite
-			black_ops_button.disabled = true
+		Cosmetics.SOYJAK:
+			soyjak_button.text = "EQUIPPED"
+			click_button.texture_normal = soyjak_sprite
+			soyjak_button.disabled = true
 			current_skin = skin
-		Cosmetics.INCREDIBLE_GASSY:
-			incredible_gassy_button.text = "EQUIPPED"
-			click_button.texture_normal = incredible_gassy_sprite
-			incredible_gassy_button.disabled = true
+		Cosmetics.COBSON:
+			cobson_button.text = "EQUIPPED"
+			click_button.texture_normal = cobson_sprite
+			cobson_button.disabled = true
 			current_skin = skin
-		Cosmetics.KAPPA:
-			kappa_button.text = "EQUIPPED"
-			click_button.texture_normal = kappa_sprite
-			kappa_button.disabled = true
+		Cosmetics.CHUDJAK:
+			chudjak_button.text = "EQUIPPED"
+			click_button.texture_normal = chudjak_sprite
+			chudjak_button.disabled = true
 			current_skin = skin
-		Cosmetics.HEDGEHOG:
-			hedgehog_button.text = "EQUIPPED"
-			click_button.texture_normal = hedgehog_sprite
-			hedgehog_button.disabled = true
+		Cosmetics.GAPEJAK:
+			gapejak_button.text = "EQUIPPED"
+			click_button.texture_normal = gapejak_sprite
+			gapejak_button.disabled = true
 			current_skin = skin
 		Cosmetics.REDACTED:
 			redacted_button.text = "EQUIPPED"
@@ -165,58 +167,62 @@ func update_cosmetic(skin: Cosmetics) -> void:
 			current_skin = skin
 
 func update_cosmetic_labels() -> void:
-	if cosmetic_data[Cosmetics.DEFAULT]:
-		if current_skin == Cosmetics.DEFAULT:
-			default_button.text = "EQUIPPED"
-			default_button.disabled = true
+	if cosmetic_data[Cosmetics.WOJAK]:
+		if current_skin == Cosmetics.WOJAK:
+			wojak_button.text = "EQUIPPED"
+			wojak_button.disabled = true
 		else:
-			default_button.text = "EQUIP"
-			default_button.disabled = false
+			wojak_button.text = "EQUIP"
+			wojak_button.disabled = false
 	
-	if cosmetic_data[Cosmetics.BLACK_OPS]:
-		if current_skin == Cosmetics.BLACK_OPS:
-			black_ops_button.text = "EQUIPPED"
-			black_ops_button.disabled = true
+	if cosmetic_data[Cosmetics.SOYJAK]:
+		if current_skin == Cosmetics.SOYJAK:
+			soyjak_button.text = "EQUIPPED"
+			soyjak_button.disabled = true
 		else:
-			black_ops_button.text = "EQUIP"
-			black_ops_button.disabled = false
+			soyjak_button.text = "EQUIP"
+			soyjak_button.disabled = false
 	
-	if cosmetic_data[Cosmetics.INCREDIBLE_GASSY]:
-		if current_skin == Cosmetics.INCREDIBLE_GASSY:
-			incredible_gassy_button.text = "EQUIPPED"
-			incredible_gassy_button.disabled = true
+	if cosmetic_data[Cosmetics.COBSON]:
+		if current_skin == Cosmetics.COBSON:
+			cobson_button.text = "EQUIPPED"
+			cobson_button.disabled = true
 		else:
-			incredible_gassy_button.text = "EQUIP"
-			incredible_gassy_button.disabled = false
+			cobson_button.text = "EQUIP"
+			cobson_button.disabled = false
 	
-	if cosmetic_data[Cosmetics.KAPPA]:
-		if current_skin == Cosmetics.KAPPA:
-			kappa_button.text = "EQUIPPED"
-			kappa_button.disabled = true
+	if cosmetic_data[Cosmetics.CHUDJAK]:
+		if current_skin == Cosmetics.CHUDJAK:
+			chudjak_button.text = "EQUIPPED"
+			chudjak_button.disabled = true
 		else:
-			kappa_button.text = "EQUIP"
-			kappa_button.disabled = false
+			chudjak_button.text = "EQUIP"
+			chudjak_button.disabled = false
 	
-	if cosmetic_data[Cosmetics.HEDGEHOG]:
-		if current_skin == Cosmetics.HEDGEHOG:
-			hedgehog_button.text = "EQUIPPED"
-			hedgehog_button.disabled = true
+	if cosmetic_data[Cosmetics.GAPEJAK]:
+		if current_skin == Cosmetics.GAPEJAK:
+			gapejak_button.text = "EQUIPPED"
+			gapejak_button.disabled = true
 		else:
-			hedgehog_button.text = "EQUIP"
-			hedgehog_button.disabled = false
+			gapejak_button.text = "EQUIP"
+			gapejak_button.disabled = false
 	
 	if cosmetic_data[Cosmetics.REDACTED]:
 		if current_skin == Cosmetics.REDACTED:
+			redacted_label.text = "Tony Soprano Soyjak"
 			redacted_button.text = "EQUIPPED"
 			redacted_button.disabled = true
 		else:
+			redacted_label.text = "Tony Soprano Soyjak"
 			redacted_button.text = "EQUIP"
 			redacted_button.disabled = false
 	else:
 		if show_redacted_amount:
 			redacted_button.text = str(25000000)
+			redacted_label.text = "Tony Soprano Soyjak"
 		else:
 			redacted_button.text = "???"
+			redacted_label.text = "[REDACTED]"
 
 func display_offline_points_label() -> void:
 	offline_points_label.text = "[outline_size=4][outline_color=black]You earned %s points while away!" % [int(offline_points)]
@@ -295,29 +301,29 @@ func _on_offline_upgrade_button_down() -> void:
 
 func _on_cosmetic_button_down(skin: Cosmetics) -> void:
 	match skin:
-		Cosmetics.DEFAULT:
+		Cosmetics.WOJAK:
 			update_cosmetic(skin)
-			cosmetic_data[Cosmetics.DEFAULT] = true
-		Cosmetics.BLACK_OPS:
-			if points >= int(black_ops_button.text):
-				points -= int(black_ops_button.text)
+			cosmetic_data[Cosmetics.WOJAK] = true
+		Cosmetics.SOYJAK:
+			if points >= int(soyjak_button.text):
+				points -= int(soyjak_button.text)
 				update_cosmetic(skin)
-				cosmetic_data[Cosmetics.BLACK_OPS] = true
-		Cosmetics.INCREDIBLE_GASSY:
-			if points >= int(incredible_gassy_button.text):
-				points -= int(incredible_gassy_button.text)
+				cosmetic_data[Cosmetics.SOYJAK] = true
+		Cosmetics.COBSON:
+			if points >= int(cobson_button.text):
+				points -= int(cobson_button.text)
 				update_cosmetic(skin)
-				cosmetic_data[Cosmetics.INCREDIBLE_GASSY] = true
-		Cosmetics.KAPPA:
-			if points >= int(kappa_button.text):
-				points -= int(kappa_button.text)
+				cosmetic_data[Cosmetics.COBSON] = true
+		Cosmetics.CHUDJAK:
+			if points >= int(chudjak_button.text):
+				points -= int(chudjak_button.text)
 				update_cosmetic(skin)
-				cosmetic_data[Cosmetics.KAPPA] = true
-		Cosmetics.HEDGEHOG:
-			if points >= int(hedgehog_button.text):
-				points -= int(hedgehog_button.text)
+				cosmetic_data[Cosmetics.CHUDJAK] = true
+		Cosmetics.GAPEJAK:
+			if points >= int(gapejak_button.text):
+				points -= int(gapejak_button.text)
 				update_cosmetic(skin)
-				cosmetic_data[Cosmetics.HEDGEHOG] = true
+				cosmetic_data[Cosmetics.GAPEJAK] = true
 		Cosmetics.REDACTED:
 			if points >= int(redacted_button.text):
 				points -= int(redacted_button.text)

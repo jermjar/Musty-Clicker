@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://c0tlpmol6slto"]
 
 [ext_resource type="Script" uid="uid://d02falal1fhpf" path="res://game_manager.gd" id="1_80nbo"]
-[ext_resource type="Texture2D" uid="uid://di81xrqja3uny" path="res://art/icon.svg" id="2_e2o6t"]
-[ext_resource type="Texture2D" uid="uid://b1bunfjkttjfa" path="res://art/incredible-gassy.png" id="2_fc0e3"]
 [ext_resource type="Script" uid="uid://vsyvypircr3w" path="res://click_center_container.gd" id="2_feb5d"]
-[ext_resource type="Texture2D" uid="uid://bc1204ilclfeo" path="res://art/blackOps1MainMenuGuy.png" id="3_vef74"]
-[ext_resource type="Texture2D" uid="uid://2oskionc1475" path="res://art/kappa.png" id="4_7jktm"]
+[ext_resource type="Texture2D" uid="uid://bd8kxc2ugpcwy" path="res://art/Soyjaks/Wojak.jpg" id="2_mfdv2"]
+[ext_resource type="Texture2D" uid="uid://bjb612q7i4mma" path="res://art/Soyjaks/Soyjak.jpg" id="3_mfdv2"]
+[ext_resource type="Texture2D" uid="uid://bigkhganrq66e" path="res://art/Soyjaks/Cobson.png" id="4_hve3p"]
 [ext_resource type="Shader" uid="uid://d0f5ufb5pfjps" path="res://background.gdshader" id="5_eow3j"]
-[ext_resource type="Texture2D" uid="uid://bx4nja0kfshix" path="res://art/jorin.png" id="5_j5wjh"]
+[ext_resource type="Texture2D" uid="uid://rxu25q7jcio4" path="res://art/Soyjaks/chudjak.jpg" id="5_vef74"]
 [ext_resource type="Texture2D" uid="uid://bftmqpywup1ru" path="res://art/pattern_35.png" id="6_eow3j"]
-[ext_resource type="Texture2D" uid="uid://dwdpx1w6qe88n" path="res://art/obunga4.jpg" id="7_hve3p"]
+[ext_resource type="Texture2D" uid="uid://b6dp0swuip1t8" path="res://art/Soyjaks/gapejak.png" id="6_hve3p"]
+[ext_resource type="Texture2D" uid="uid://caqbdccbn0vsj" path="res://art/Soyjaks/Tony-Soprano.png" id="7_mfdv2"]
+[ext_resource type="Shader" uid="uid://bor580yv5rg4y" path="res://center_button.gdshader" id="11_mfdv2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vef74"]
 shader = ExtResource("5_eow3j")
@@ -20,14 +21,19 @@ shader_parameter/repeat_y = 1.0
 shader_parameter/aspect_ratio = 0.5625
 shader_parameter/tint = Color(0.26666668, 0.33333334, 0.4, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hve3p"]
+shader = ExtResource("11_mfdv2")
+shader_parameter/radius = 0.5
+shader_parameter/edge = 0.005
+
 [node name="Game" type="Node2D" unique_id=559046950]
 script = ExtResource("1_80nbo")
-default_sprite = ExtResource("2_e2o6t")
-black_ops_sprite = ExtResource("3_vef74")
-incredible_gassy_sprite = ExtResource("2_fc0e3")
-kappa_sprite = ExtResource("4_7jktm")
-hedgehog_sprite = ExtResource("5_j5wjh")
-redacted_sprite = ExtResource("7_hve3p")
+wojak_sprite = ExtResource("2_mfdv2")
+soyjak_sprite = ExtResource("3_mfdv2")
+cobson_sprite = ExtResource("4_hve3p")
+chudjak_sprite = ExtResource("5_vef74")
+gapejak_sprite = ExtResource("6_hve3p")
+redacted_sprite = ExtResource("7_mfdv2")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=891288190]
 
@@ -124,21 +130,22 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -98.0
-offset_top = -96.0
-offset_right = 30.0
-offset_bottom = 32.0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.5, 1.5)
 script = ExtResource("2_feb5d")
 
 [node name="Click_TextureButton" type="TextureButton" parent="UI/Click_CenterContainer" unique_id=1998159159]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 128)
-custom_maximum_size = Vector2(128, 128)
+material = SubResource("ShaderMaterial_hve3p")
+custom_minimum_size = Vector2(256, 256)
+custom_maximum_size = Vector2(256, 256)
 layout_mode = 2
-texture_normal = ExtResource("2_e2o6t")
+texture_normal = ExtResource("2_mfdv2")
+stretch_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=1809763926]
 anchors_preset = 12
@@ -230,91 +237,91 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="DefaultContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=40918889]
+[node name="WojakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=40918889]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="DefaultLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/DefaultContainer" unique_id=1518011293]
+[node name="WojakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/WojakContainer" unique_id=1518011293]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 bbcode_enabled = true
-text = "Default"
+text = "Wojak"
 scroll_active = false
 
-[node name="DefaultButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/DefaultContainer" unique_id=252369779]
+[node name="WojakButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/WojakContainer" unique_id=252369779]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "EQUIPPED"
 
-[node name="BlackOpsContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=823044568]
+[node name="SoyjakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=823044568]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="BlackOpsLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/BlackOpsContainer" unique_id=929727176]
+[node name="SoyjakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/SoyjakContainer" unique_id=929727176]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 bbcode_enabled = true
-text = "Black Ops Guy"
+text = "Soyjak"
 scroll_active = false
 
-[node name="BlackOpsButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/BlackOpsContainer" unique_id=1642404751]
+[node name="SoyjakButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/SoyjakContainer" unique_id=1642404751]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "5000"
 
-[node name="IncredibleGassyContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1682442578]
+[node name="CobsonContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1682442578]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="IncredibleGassyLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/IncredibleGassyContainer" unique_id=1120659939]
+[node name="CobsonLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/CobsonContainer" unique_id=1120659939]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 bbcode_enabled = true
-text = "Incredible Gassy"
+text = "Cobson"
 scroll_active = false
 
-[node name="IncredibleGassyButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/IncredibleGassyContainer" unique_id=1034006223]
+[node name="CobsonButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/CobsonContainer" unique_id=1034006223]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "20000"
 
-[node name="KappaContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=2034172948]
+[node name="ChudjakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=2034172948]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="KappaLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/KappaContainer" unique_id=839402207]
+[node name="ChudjakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/ChudjakContainer" unique_id=839402207]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 bbcode_enabled = true
-text = "Kappa"
+text = "Chudjak"
 scroll_active = false
 
-[node name="KappaButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/KappaContainer" unique_id=1578091261]
+[node name="ChudjakButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/ChudjakContainer" unique_id=1578091261]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "100000"
 
-[node name="HedgehogContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1126017698]
+[node name="GapejakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1126017698]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HedgehogLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/HedgehogContainer" unique_id=849614434]
+[node name="GapejakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/GapejakContainer" unique_id=849614434]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 bbcode_enabled = true
-text = "Hedgehog"
+text = "Gapejak"
 scroll_active = false
 
-[node name="HedgehogButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/HedgehogContainer" unique_id=1753646286]
+[node name="GapejakButton" type="Button" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/GapejakContainer" unique_id=1753646286]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -325,6 +332,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="RedactedLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/RedactedContainer" unique_id=167684539]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0

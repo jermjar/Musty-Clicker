@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2oskionc1475"
-path="res://.godot/imported/kappa.png-ebc87578339201461197a5870d6ff432.ctex"
+uid="uid://b6dp0swuip1t8"
+path="res://.godot/imported/gapejak.png-f23764aa87ec7178e9239a4b56aae5c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/kappa.png"
-dest_files=["res://.godot/imported/kappa.png-ebc87578339201461197a5870d6ff432.ctex"]
+source_file="res://art/Soyjaks/gapejak.png"
+dest_files=["res://.godot/imported/gapejak.png-f23764aa87ec7178e9239a4b56aae5c2.ctex"]
 
 [params]
 

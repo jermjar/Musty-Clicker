@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwdpx1w6qe88n"
-path="res://.godot/imported/obunga4.jpg-4b2ef0ad848dd8b45f31ed4301486a44.ctex"
+uid="uid://bigkhganrq66e"
+path="res://.godot/imported/Cobson.png-0f88b781d434dcda614a8a8e4707fa8b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/obunga4.jpg"
-dest_files=["res://.godot/imported/obunga4.jpg-4b2ef0ad848dd8b45f31ed4301486a44.ctex"]
+source_file="res://art/Soyjaks/Cobson.png"
+dest_files=["res://.godot/imported/Cobson.png-0f88b781d434dcda614a8a8e4707fa8b.ctex"]
 
 [params]
 

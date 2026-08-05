@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://bftmqpywup1ru" path="res://art/pattern_35.png" id="6_eow3j"]
 [ext_resource type="Texture2D" uid="uid://b6dp0swuip1t8" path="res://art/Soyjaks/gapejak.png" id="6_hve3p"]
 [ext_resource type="Texture2D" uid="uid://caqbdccbn0vsj" path="res://art/Soyjaks/Tony-Soprano.png" id="7_mfdv2"]
+[ext_resource type="Texture2D" uid="uid://dqk3nj7dl0omi" path="res://art/UI/icons/x-icon.png" id="11_lc2xo"]
 [ext_resource type="Shader" uid="uid://bor580yv5rg4y" path="res://center_button.gdshader" id="11_mfdv2"]
+[ext_resource type="Theme" uid="uid://d4bgevpeki1na" path="res://soyjak_theme.tres" id="12_iotsf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vef74"]
 shader = ExtResource("5_eow3j")
@@ -44,6 +46,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("12_iotsf")
 
 [node name="ColorRect" type="ColorRect" parent="UI/Background" unique_id=73753264]
 layout_mode = 1
@@ -52,6 +55,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("12_iotsf")
 color = Color(0.16078432, 0.22745098, 0.28235295, 1)
 
 [node name="TextureRect" type="TextureRect" parent="UI/Background" unique_id=1905102326]
@@ -62,6 +66,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("12_iotsf")
 texture = ExtResource("6_eow3j")
 
 [node name="MenuButton" type="Button" parent="UI" unique_id=434359032]
@@ -70,12 +75,15 @@ custom_minimum_size = Vector2(30, 30)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -38.0
+offset_left = -42.0
 offset_top = 12.0
 offset_right = -12.0
 offset_bottom = 43.0
 grow_horizontal = 0
-text = "Exit"
+theme = ExtResource("12_iotsf")
+icon = ExtResource("11_lc2xo")
+icon_alignment = 1
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Top_VBoxContainer" type="VBoxContainer" parent="UI" unique_id=852032032]
@@ -85,14 +93,17 @@ offset_top = 46.0
 offset_bottom = 107.0
 grow_horizontal = 2
 mouse_filter = 2
+theme = ExtResource("12_iotsf")
 
-[node name="PointsLabel" type="RichTextLabel" parent="UI/Top_VBoxContainer" unique_id=1179748471]
+[node name="UpdootsLabel" type="RichTextLabel" parent="UI/Top_VBoxContainer" unique_id=1179748471]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+theme = ExtResource("12_iotsf")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "[outline_size=4][outline_color=black]0 points"
+text = "[outline_size=4][outline_color=black]0 updoots"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
@@ -102,7 +113,9 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 16
+theme = ExtResource("12_iotsf")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "[outline_size=4][outline_color=black]per second:  0"
 fit_content = true
@@ -110,12 +123,15 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="OfflinePointsLabel" type="RichTextLabel" parent="UI" unique_id=1681617332]
+[node name="OfflineUpdootsLabel" type="RichTextLabel" parent="UI" unique_id=1681617332]
 unique_name_in_owner = true
 visible = false
 offset_top = 238.0
 offset_right = 540.0
 offset_bottom = 261.0
+theme = ExtResource("12_iotsf")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "You earned PLACEHOLDER points while away!"
 fit_content = true
@@ -136,6 +152,7 @@ offset_right = 128.0
 offset_bottom = 128.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("12_iotsf")
 script = ExtResource("2_feb5d")
 
 [node name="Click_TextureButton" type="TextureButton" parent="UI/Click_CenterContainer" unique_id=1998159159]
@@ -144,6 +161,7 @@ material = SubResource("ShaderMaterial_hve3p")
 custom_minimum_size = Vector2(256, 256)
 custom_maximum_size = Vector2(256, 256)
 layout_mode = 2
+theme = ExtResource("12_iotsf")
 texture_normal = ExtResource("2_mfdv2")
 stretch_mode = 0
 
@@ -155,29 +173,32 @@ anchor_bottom = 1.0
 offset_top = -140.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("12_iotsf")
 alignment = 2
 
 [node name="UpgradeFoldableContainer" type="FoldableContainer" parent="UI/VBoxContainer" unique_id=1248534015]
 unique_name_in_owner = true
 layout_mode = 2
-folded = true
+theme = ExtResource("12_iotsf")
 title = "Upgrades"
 title_position = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer" unique_id=141659802]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="ClickUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer" unique_id=1480060794]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="ClickUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/ClickUpgradeContainer" unique_id=1650268280]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 bbcode_enabled = true
 text = "Click Upgrade"
 scroll_active = false
@@ -186,48 +207,56 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "0
 "
 
 [node name="PPSUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer" unique_id=283949520]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="PPSUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/PPSUpgradeContainer" unique_id=57526179]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-text = "Points Per Second Upgrade"
+theme = ExtResource("12_iotsf")
+text = "Updoots Per Second Upgrade"
 scroll_active = false
 
 [node name="PPSUpgradeButton" type="Button" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/PPSUpgradeContainer" unique_id=594306379]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "0"
 
-[node name="OfflinePointsUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer" unique_id=516894294]
+[node name="OfflineUpdootsUpgradeContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer" unique_id=516894294]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
-[node name="OfflineUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/OfflinePointsUpgradeContainer" unique_id=888007426]
+[node name="OfflineUpgradeLabel" type="RichTextLabel" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/OfflineUpdootsUpgradeContainer" unique_id=888007426]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 text = "Offline Hours Upgrade (1 Hour)"
 scroll_active = false
 
-[node name="OfflineUpgradeButton" type="Button" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/OfflinePointsUpgradeContainer" unique_id=140464091]
+[node name="OfflineUpgradeButton" type="Button" parent="UI/VBoxContainer/UpgradeFoldableContainer/VBoxContainer/OfflineUpdootsUpgradeContainer" unique_id=140464091]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "0"
 
 [node name="CosmeticFoldableContainer" type="FoldableContainer" parent="UI/VBoxContainer" unique_id=622568859]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("12_iotsf")
 folded = true
 title = "Cosmetics"
 title_position = 1
@@ -236,15 +265,18 @@ title_position = 1
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="WojakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=40918889]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="WojakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/WojakContainer" unique_id=1518011293]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 bbcode_enabled = true
 text = "Wojak"
 scroll_active = false
@@ -253,16 +285,19 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "EQUIPPED"
 
 [node name="SoyjakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=823044568]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="SoyjakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/SoyjakContainer" unique_id=929727176]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 bbcode_enabled = true
 text = "Soyjak"
 scroll_active = false
@@ -271,16 +306,19 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "5000"
 
 [node name="CobsonContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1682442578]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="CobsonLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/CobsonContainer" unique_id=1120659939]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 bbcode_enabled = true
 text = "Cobson"
 scroll_active = false
@@ -289,16 +327,19 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "20000"
 
 [node name="ChudjakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=2034172948]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="ChudjakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/ChudjakContainer" unique_id=839402207]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 bbcode_enabled = true
 text = "Chudjak"
 scroll_active = false
@@ -307,16 +348,19 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "100000"
 
 [node name="GapejakContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=1126017698]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="GapejakLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/GapejakContainer" unique_id=849614434]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 bbcode_enabled = true
 text = "Gapejak"
 scroll_active = false
@@ -325,17 +369,20 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "500000"
 
 [node name="RedactedContainer" type="HBoxContainer" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer" unique_id=945636237]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("12_iotsf")
 
 [node name="RedactedLabel" type="RichTextLabel" parent="UI/VBoxContainer/CosmeticFoldableContainer/VBoxContainer/RedactedContainer" unique_id=167684539]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme = ExtResource("12_iotsf")
 bbcode_enabled = true
 text = "[REDACTED]"
 scroll_active = false
@@ -344,4 +391,5 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("12_iotsf")
 text = "???"

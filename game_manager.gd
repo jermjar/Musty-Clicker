@@ -1,17 +1,5 @@
 extends Node2D
 
-const save_path = "user://save_data.json"
-var save_data: Dictionary
-
-var cosmetic_data: Dictionary = {
-	Cosmetics.WOJAK: true,
-	Cosmetics.SOYJAK: false,
-	Cosmetics.COBSON: false,
-	Cosmetics.CHUDJAK: false,
-	Cosmetics.GAPEJAK: false,
-	Cosmetics.REDACTED: false
-}
-
 enum OfflineHours {
 	ZERO = 0,
 	ONE = 1,
@@ -33,6 +21,18 @@ enum Cosmetics {
 }
 
 const LABEL_SPEED = 200
+const upvote_sprite: StringName = "res://art/UI/Upvote.png"
+const save_path = "user://save_data.json"
+
+var save_data: Dictionary
+var cosmetic_data: Dictionary = {
+	Cosmetics.WOJAK: true,
+	Cosmetics.SOYJAK: false,
+	Cosmetics.COBSON: false,
+	Cosmetics.CHUDJAK: false,
+	Cosmetics.GAPEJAK: false,
+	Cosmetics.REDACTED: false
+}
 
 @export var wojak_sprite: CompressedTexture2D
 @export var soyjak_sprite: CompressedTexture2D
@@ -48,9 +48,9 @@ const LABEL_SPEED = 200
 @onready var gapejak_button: Button = %GapejakButton
 @onready var redacted_button: Button = %RedactedButton
 
-@onready var points_label: RichTextLabel = %PointsLabel
+@onready var points_label: RichTextLabel = %UpdootsLabel
 @onready var per_second_label: RichTextLabel = %PerSecondLabel
-@onready var offline_points_label: RichTextLabel = %OfflinePointsLabel
+@onready var offline_points_label: RichTextLabel = %OfflineUpdootsLabel
 @onready var offline_upgrade_label: RichTextLabel = %OfflineUpgradeLabel
 @onready var redacted_label: RichTextLabel = %RedactedLabel
 
@@ -130,7 +130,7 @@ func update_upgrade_text() -> void:
 		offline_upgrade_button.text = "PURCHASED"
 
 func update_labels() -> void:
-	points_label.text = "[outline_size=4][outline_color=black]%s points" % [int(points)]
+	points_label.text = "[outline_size=4][outline_color=black]%s updoots" % [int(points)]
 	per_second_label.text = "[outline_size=4][outline_color=black]per second:  %s" % [points_per_second]
 
 func update_cosmetic(skin: Cosmetics) -> void:
@@ -225,9 +225,9 @@ func update_cosmetic_labels() -> void:
 			redacted_label.text = "[REDACTED]"
 
 func display_offline_points_label() -> void:
-	offline_points_label.text = "[outline_size=4][outline_color=black]You earned %s points while away!" % [int(offline_points)]
+	offline_points_label.text = "[outline_size=4][outline_color=black]You earned %s updoots while away!" % [int(offline_points)]
 	offline_points_label.show()
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	var tween = get_tree().create_tween()
 	tween.tween_property(offline_points_label, "modulate:a", 0, 1)
 	await tween.finished
@@ -239,7 +239,8 @@ func _on_click_button_up() -> void:
 		points += points_per_click
 		var ppc_label: RichTextLabel = RichTextLabel.new()
 		var mouse_pos = get_global_mouse_position()
-		ppc_label.text = "[outline_size=4][outline_color=black]+%s" % [points_per_click]
+		#ppc_label.theme = load("res://soyjak_theme.tres")
+		ppc_label.text = "[color=white][outline_size=4][outline_color=black][img]%s[/img] %s" % [upvote_sprite, points_per_click]
 		ppc_label.position = mouse_pos
 		ppc_label.bbcode_enabled = true
 		ppc_label.fit_content = true

@@ -111,6 +111,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	points += points_per_second * delta
 	update_labels()
+	set_disabled_for_upgrade_buttons()
 	
 	if points >= 9000000 and not show_redacted_amount:
 		show_redacted_amount = true
@@ -118,6 +119,17 @@ func _process(delta: float) -> void:
 	if show_redacted_amount and not stop_process_check:
 		stop_process_check = true
 		update_cosmetic_labels()
+
+func set_disabled_for_upgrade_buttons() -> void:
+	if points >= click_upgrade_amount and click_upgrade_button.disabled:
+		click_upgrade_button.disabled = false
+	elif points < click_upgrade_amount and not click_upgrade_button.disabled:
+		click_upgrade_button.disabled = true
+	
+	if points >= pps_upgrade_amount and pps_upgrade_button.disabled:
+		pps_upgrade_button.disabled = false
+	elif points < pps_upgrade_amount and not pps_upgrade_button.disabled:
+		pps_upgrade_button.disabled = true
 
 func update_upgrade_text() -> void:
 	click_upgrade_button.text = str(click_upgrade_amount)

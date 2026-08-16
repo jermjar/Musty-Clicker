@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.7", "Mobile")
 run/max_fps=60
 config/icon="res://art/icon.svg"
 
+[autoload]
+
+AudioManager="*uid://f5k851vmtmci"
+
 [display]
 
 window/size/viewport_width=540

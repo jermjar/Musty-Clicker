@@ -5,30 +5,24 @@
 [ext_resource type="Texture2D" uid="uid://bd8kxc2ugpcwy" path="res://art/Soyjaks/Wojak.jpg" id="2_mfdv2"]
 [ext_resource type="Texture2D" uid="uid://bjb612q7i4mma" path="res://art/Soyjaks/Soyjak.jpg" id="3_mfdv2"]
 [ext_resource type="Texture2D" uid="uid://bigkhganrq66e" path="res://art/Soyjaks/Cobson.png" id="4_hve3p"]
-[ext_resource type="Shader" uid="uid://d0f5ufb5pfjps" path="res://scripts/background.gdshader" id="5_eow3j"]
 [ext_resource type="Texture2D" uid="uid://rxu25q7jcio4" path="res://art/Soyjaks/chudjak.jpg" id="5_vef74"]
-[ext_resource type="Texture2D" uid="uid://bftmqpywup1ru" path="res://art/pattern_35.png" id="6_eow3j"]
 [ext_resource type="Texture2D" uid="uid://b6dp0swuip1t8" path="res://art/Soyjaks/gapejak.png" id="6_hve3p"]
 [ext_resource type="Texture2D" uid="uid://caqbdccbn0vsj" path="res://art/Soyjaks/Tony-Soprano.png" id="7_mfdv2"]
+[ext_resource type="Texture2D" uid="uid://bvwfsjx14b8et" path="res://art/windows-95-bg.png" id="11_e8heu"]
 [ext_resource type="Texture2D" uid="uid://dqk3nj7dl0omi" path="res://art/UI/icons/x-icon.png" id="11_lc2xo"]
 [ext_resource type="Shader" uid="uid://bor580yv5rg4y" path="res://scripts/center_button.gdshader" id="11_mfdv2"]
-[ext_resource type="Theme" uid="uid://d4bgevpeki1na" path="res://soyjak_theme.tres" id="12_iotsf"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vef74"]
-shader = ExtResource("5_eow3j")
-shader_parameter/rotation_speed = 5.000017337500026
-shader_parameter/angle_degrees = 0.0
-shader_parameter/repeat_x = 1.0
-shader_parameter/repeat_y = 1.0
-shader_parameter/aspect_ratio = 0.5625
-shader_parameter/tint = Color(0.26666668, 0.33333334, 0.4, 1)
+[ext_resource type="Theme" uid="uid://d4bgevpeki1na" path="res://art/soyjak_theme.tres" id="12_iotsf"]
+[ext_resource type="Texture2D" uid="uid://dxswmhjbmw4sg" path="res://art/UI/icons/sound.png" id="13_rvswv"]
+[ext_resource type="Script" uid="uid://f5k851vmtmci" path="res://scripts/audio_manager.gd" id="14_215e1"]
+[ext_resource type="AudioStream" uid="uid://piqjwirl1evx" path="res://audio/SoyjakClickerTheme.mp3" id="15_7sc4i"]
+[ext_resource type="AudioStream" uid="uid://cf62qr6phoynx" path="res://audio/mouse-click.mp3" id="16_80cx4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hve3p"]
 shader = ExtResource("11_mfdv2")
 shader_parameter/radius = 0.5
 shader_parameter/edge = 0.005
 
-[node name="Game" type="Node2D" unique_id=559046950]
+[node name="Game" type="Node2D" unique_id=559046950 node_paths=PackedStringArray("audio")]
 script = ExtResource("1_80nbo")
 wojak_sprite = ExtResource("2_mfdv2")
 soyjak_sprite = ExtResource("3_mfdv2")
@@ -36,6 +30,7 @@ cobson_sprite = ExtResource("4_hve3p")
 chudjak_sprite = ExtResource("5_vef74")
 gapejak_sprite = ExtResource("6_hve3p")
 redacted_sprite = ExtResource("7_mfdv2")
+audio = NodePath("Audio")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=891288190]
 
@@ -48,28 +43,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("12_iotsf")
 
-[node name="ColorRect" type="ColorRect" parent="UI/Background" unique_id=73753264]
+[node name="TextureRect" type="TextureRect" parent="UI/Background" unique_id=96737873]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("12_iotsf")
-color = Color(0.16078432, 0.22745098, 0.28235295, 1)
+texture = ExtResource("11_e8heu")
 
-[node name="TextureRect" type="TextureRect" parent="UI/Background" unique_id=1905102326]
-material = SubResource("ShaderMaterial_vef74")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("12_iotsf")
-texture = ExtResource("6_eow3j")
-
-[node name="MenuButton" type="Button" parent="UI" unique_id=434359032]
+[node name="QuitButton" type="Button" parent="UI" unique_id=434359032]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(30, 30)
 anchors_preset = 1
@@ -82,6 +65,20 @@ offset_bottom = 43.0
 grow_horizontal = 0
 theme = ExtResource("12_iotsf")
 icon = ExtResource("11_lc2xo")
+icon_alignment = 1
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="SoundButton" type="Button" parent="UI" unique_id=419269399]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 42.0
+offset_bottom = 43.0
+theme = ExtResource("12_iotsf")
+toggle_mode = true
+icon = ExtResource("13_rvswv")
 icon_alignment = 1
 expand_icon = true
 metadata/_edit_use_anchors_ = true
@@ -139,7 +136,7 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Click_CenterContainer" type="CenterContainer" parent="UI" unique_id=509665110]
+[node name="Click_CenterContainer" type="CenterContainer" parent="UI" unique_id=509665110 node_paths=PackedStringArray("audio")]
 unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
@@ -154,6 +151,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("12_iotsf")
 script = ExtResource("2_feb5d")
+audio = NodePath("../../Audio")
 
 [node name="Click_TextureButton" type="TextureButton" parent="UI/Click_CenterContainer" unique_id=1998159159]
 unique_name_in_owner = true
@@ -393,3 +391,20 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("12_iotsf")
 text = "???"
+
+[node name="Audio" type="Node" parent="." unique_id=1454424775 node_paths=PackedStringArray("bgm_player", "sfx_player")]
+script = ExtResource("14_215e1")
+bgm_player = NodePath("BackgroundAudioStreamPlayer")
+sfx_player = NodePath("SfxAudioStreamPlayer")
+
+[node name="BackgroundAudioStreamPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=2119029457]
+stream = ExtResource("15_7sc4i")
+volume_db = -25.0
+autoplay = true
+bus = &"music"
+
+[node name="SfxAudioStreamPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=238743468]
+stream = ExtResource("16_80cx4")
+volume_db = -29.0
+max_polyphony = 6
+bus = &"sfx"

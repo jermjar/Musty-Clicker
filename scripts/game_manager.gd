@@ -23,6 +23,8 @@ enum Cosmetics {
 const LABEL_SPEED = 200
 const upvote_sprite: StringName = "res://art/UI/Upvote.png"
 const save_path = "user://save_data.json"
+const SOUND_OFF = preload("uid://dabh3m1xaggl")
+const SOUND_ON = preload("uid://dxswmhjbmw4sg")
 
 var save_data: Dictionary
 var cosmetic_data: Dictionary = {
@@ -41,6 +43,10 @@ var cosmetic_data: Dictionary = {
 @export var gapejak_sprite: CompressedTexture2D
 @export var redacted_sprite: CompressedTexture2D
 
+@export var audio: Node
+@onready var bgm_player: AudioStreamPlayer = audio.bgm_player
+@onready var sfx_player: AudioStreamPlayer = audio.sfx_player
+
 @onready var wojak_button: Button = %WojakButton
 @onready var soyjak_button: Button = %SoyjakButton
 @onready var cobson_button: Button = %CobsonButton
@@ -55,7 +61,8 @@ var cosmetic_data: Dictionary = {
 @onready var redacted_label: RichTextLabel = %RedactedLabel
 
 @onready var click_button: TextureButton = %Click_TextureButton
-@onready var menu_button: Button = %MenuButton
+@onready var menu_button: Button = %QuitButton
+@onready var sound_button: Button = %SoundButton
 @onready var click_upgrade_button: Button = %ClickUpgradeButton
 @onready var pps_upgrade_button: Button = %PPSUpgradeButton
 @onready var offline_upgrade_button: Button = %OfflineUpgradeButton
@@ -82,6 +89,7 @@ var offline_button_disabled: bool = false
 var current_skin: Cosmetics = Cosmetics.WOJAK
 var show_redacted_amount: bool = false
 var stop_process_check: bool = false
+var sound_toggle: bool = false
 
 func _ready() -> void:
 	load_game()
@@ -94,6 +102,8 @@ func _ready() -> void:
 	click_upgrade_button.button_down.connect(_on_click_upgrade_button_down)
 	pps_upgrade_button.button_down.connect(_on_pps_upgrade_button_down)
 	offline_upgrade_button.button_down.connect(_on_offline_upgrade_button_down)
+	sound_button.toggled.connect(_on_sound_toggled)
+	sound_button.button_pressed = sound_toggle
 	
 	wojak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.WOJAK))
 	soyjak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.SOYJAK))
@@ -248,6 +258,7 @@ func display_offline_points_label() -> void:
 #region BUTTON SIGNALS
 func _on_click_button_up() -> void:
 	if click_center_container.hovering:
+		sfx_player.play()
 		points += points_per_click
 		var ppc_label: RichTextLabel = RichTextLabel.new()
 		var mouse_pos = get_global_mouse_position()
@@ -269,6 +280,7 @@ func _on_click_button_up() -> void:
 
 func _on_click_upgrade_button_down() -> void:
 	if points >= click_upgrade_amount:
+		sfx_player.play()
 		points -= click_upgrade_amount
 		click_upgrade_amount += click_upgrade_scale
 		points_per_click += click_scale
@@ -276,6 +288,7 @@ func _on_click_upgrade_button_down() -> void:
 
 func _on_pps_upgrade_button_down() -> void:
 	if points >= pps_upgrade_amount:
+		sfx_player.play()
 		points -= pps_upgrade_amount
 		pps_upgrade_amount += pps_upgrade_scale
 		points_per_second += pps_scale
@@ -283,6 +296,7 @@ func _on_pps_upgrade_button_down() -> void:
 
 func _on_offline_upgrade_button_down() -> void:
 	if points >= offline_upgrade_amount:
+		sfx_player.play()
 		points -= offline_upgrade_amount
 		match offline_hours:
 			OfflineHours.ZERO:
@@ -342,10 +356,20 @@ func _on_cosmetic_button_down(skin: Cosmetics) -> void:
 				points -= int(redacted_button.text)
 				update_cosmetic(skin)
 				cosmetic_data[Cosmetics.REDACTED] = true
+	sfx_player.play()
 	update_cosmetic_labels()
 
 func _on_menu_button_down() -> void:
+	sfx_player.play()
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+
+func _on_sound_toggled(toggled_on: bool) -> void:
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), toggled_on)
+	sound_toggle = toggled_on
+	if toggled_on:
+		sound_button.icon = SOUND_OFF
+	else:
+		sound_button.icon = SOUND_ON
 #endregion
 
 #region SAVE GAME
@@ -364,7 +388,8 @@ func save_game() -> void:
 		"cosmetic_data": var_to_str(cosmetic_data),
 		"upgrade_foldable": upgrade_foldable_container.folded,
 		"cosmetic_foldable": cosmetic_foldable_container.folded,
-		"show_redacted_amount": show_redacted_amount
+		"show_redacted_amount": show_redacted_amount,
+		"sound_toggle": sound_toggle
 	}
 	var file_access: FileAccess = FileAccess.open(save_path, FileAccess.WRITE)
 	file_access.store_string(JSON.stringify(save_data, "\t", false))
@@ -390,6 +415,7 @@ func load_game() -> void:
 		upgrade_foldable_container.folded = save_data["upgrade_foldable"]
 		cosmetic_foldable_container.folded = save_data["cosmetic_foldable"]
 		show_redacted_amount = save_data["show_redacted_amount"]
+		sound_toggle = save_data["sound_toggle"]
 		
 		var current_time = Time.get_unix_time_from_system()
 		var elapsed = current_time - save_data["last_saved_time"]

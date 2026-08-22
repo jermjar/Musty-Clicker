@@ -16,9 +16,9 @@ config/features=PackedStringArray("4.7", "Mobile")
 run/max_fps=60
 config/icon="res://art/icon.svg"
 
-[autoload]
+[audio]
 
-AudioManager="*uid://f5k851vmtmci"
+buses/default_bus_layout="uid://bmp4oby1trw2j"
 
 [display]
 

@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.7", "Mobile")
 run/max_fps=60
 config/icon="res://art/icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://bmp4oby1trw2j"
+
 [display]
 
 window/size/viewport_width=540

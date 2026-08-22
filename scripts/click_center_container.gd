@@ -1,5 +1,9 @@
 extends CenterContainer
 
+@export var audio: Node
+@onready var bgm_player: AudioStreamPlayer = audio.bgm_player
+@onready var sfx_player: AudioStreamPlayer = audio.sfx_player
+
 @onready var main_button: TextureButton = %Click_TextureButton
 
 var hovering: bool = false
@@ -13,13 +17,18 @@ func _ready() -> void:
 
 func _on_main_button_down() -> void:
 	if hovering:
+		sfx_player.play()
 		var tween = get_tree().create_tween()
-		tween.tween_property(main_button, "scale", Vector2(1.0, 1.0), 0.1)
+		tween.tween_property(main_button, "scale", Vector2(0.95, 0.95), 0.1)
 
 func _on_main_button_up() -> void:
 	if hovering:
+		sfx_player.play()
 		var tween = get_tree().create_tween()
-		tween.tween_property(main_button, "scale", Vector2(1.1, 1.1), 0.1)
+		tween.set_trans(Tween.TRANS_SINE)
+		tween.tween_property(main_button, "scale", Vector2(1.1, 1.1), 0.05)
+		tween.tween_property(main_button, "scale", Vector2(1.0, 1.0), 0.05)
+		tween.tween_property(main_button, "scale", Vector2(1.1, 1.1), 0.08)
 
 func _on_mouse_entered() -> void:
 	hovering = true

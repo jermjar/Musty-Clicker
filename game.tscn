@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://rxu25q7jcio4" path="res://art/Soyjaks/chudjak.jpg" id="5_vef74"]
 [ext_resource type="Texture2D" uid="uid://b6dp0swuip1t8" path="res://art/Soyjaks/gapejak.png" id="6_hve3p"]
 [ext_resource type="Texture2D" uid="uid://caqbdccbn0vsj" path="res://art/Soyjaks/Tony-Soprano.png" id="7_mfdv2"]
+[ext_resource type="Script" uid="uid://ciwb1vfihv6iy" path="res://scripts/fly_controller.gd" id="8_rvswv"]
 [ext_resource type="Texture2D" uid="uid://bvwfsjx14b8et" path="res://art/windows-95-bg.png" id="11_e8heu"]
 [ext_resource type="Texture2D" uid="uid://dqk3nj7dl0omi" path="res://art/UI/icons/x-icon.png" id="11_lc2xo"]
 [ext_resource type="Shader" uid="uid://bor580yv5rg4y" path="res://scripts/center_button.gdshader" id="11_mfdv2"]
@@ -16,13 +17,39 @@
 [ext_resource type="Script" uid="uid://f5k851vmtmci" path="res://scripts/audio_manager.gd" id="14_215e1"]
 [ext_resource type="AudioStream" uid="uid://piqjwirl1evx" path="res://audio/SoyjakClickerTheme.mp3" id="15_7sc4i"]
 [ext_resource type="AudioStream" uid="uid://cf62qr6phoynx" path="res://audio/mouse-click.mp3" id="16_80cx4"]
+[ext_resource type="AudioStream" uid="uid://bud03t8vloa6" path="res://audio/insect swarm.mp3" id="18_boyg6"]
+[ext_resource type="AudioStream" uid="uid://bpkj5lhsc1urh" path="res://audio/isaac_animal_squish.mp3" id="18_rvswv"]
+
+[sub_resource type="Curve2D" id="Curve2D_e8heu"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -159, 229, 0, 0, 0, 0, -84, 229, 0, 0, 0, 0, -22, 238, 0, 0, 0, 0, 17, 205, 0, 0, 0, 0, 6, 181, 0, 0, 0, 0, 18, 155, 0, 0, 0, 0, 45, 134, 0, 0, 0, 0, 76, 137, 0, 0, 0, 0, 94, 139, 0, 0, 0, 0, 114, 152, 0, 0, 0, 0, 128, 176, 0, 0, 0, 0, 128, 203, 0, 0, 0, 0, 141, 226, 0, 0, 0, 0, 161, 241, 0, 0, 0, 0, 190, 239, 0, 0, 0, 0, 216, 223, 0, 0, 0, 0, 235, 199, 0, 0, 0, 0, 224, 172, 0, 0, 0, 0, 201, 158, 0, 0, 0, 0, 190, 138, 0, 0, 0, 0, 191, 111, 0, 0, 0, 0, 209, 88, 0, 0, 0, 0, 238, 83, 0, 0, 0, 0, 277, 68, 0, 0, 0, 0, 319, 74, 0, 0, 0, 0, 350, 92, 0, 0, 0, 0, 370, 123, 0, 0, 0, 0, 376, 162, 0, 0, 0, 0, 401, 186, 0, 0, 0, 0, 438, 198, 0, 0, 0, 0, 481, 193, 0, 0, 0, 0, 501, 175, 0, 0, 0, 0, 498, 157, 0, 0, 0, 0, 484, 149, 0, 0, 0, 0, 490, 123, 0, 0, 0, 0, 505, 115, 0, 0, 0, 0, 527, 122, 0, 0, 0, 0, 541, 109, 0, 0, 0, 0, 567, 104, 0, 0, 0, 0, 617, 104)
+}
+point_count = 40
+
+[sub_resource type="Curve2D" id="Curve2D_boyg6"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 632, 660, 0, 0, 0, 0, 562, 659, 0, 0, 0, 0, 547, 621, 0, 0, 0, 0, 526, 590, 0, 0, 0, 0, 485, 579, 0, 0, 0, 0, 450, 583, 0, 0, 0, 0, 426, 606, 0, 0, 0, 0, 399, 627, 0, 0, 0, 0, 384, 660, 0, 0, 0, 0, 379, 695, 0, 0, 0, 0, 353, 727, 0, 0, 0, 0, 322, 736, 0, 0, 0, 0, 290, 739, 0, 0, 0, 0, 273, 737, 0, 0, 0, 0, 244, 726, 0, 0, 0, 0, 226, 711, 0, 0, 0, 0, 203, 691, 0, 0, 0, 0, 197, 671, 0, 0, 0, 0, 212, 651, 0, 0, 0, 0, 242, 635, 0, 0, 0, 0, 271, 622, 0, 0, 0, 0, 296, 613, 0, 0, 0, 0, 327, 616, 0, 0, 0, 0, 353, 634, 0, 0, 0, 0, 364, 654, 0, 0, 0, 0, 343, 692, 0, 0, 0, 0, 298, 716, 0, 0, 0, 0, 256, 736, 0, 0, 0, 0, 215, 745, 0, 0, 0, 0, 170, 739, 0, 0, 0, 0, 148, 711, 0, 0, 0, 0, 137, 678, 0, 0, 0, 0, 146, 653, 0, 0, 0, 0, 117, 632, 0, 0, 0, 0, 81, 635, 0, 0, 0, 0, 51, 657, 0, 0, 0, 0, 33, 689, 0, 0, 0, 0, 25, 720, 0, 0, 0, 0, -76, 720)
+}
+point_count = 39
+
+[sub_resource type="Curve2D" id="Curve2D_e36ub"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 640, 250, 0, 0, 0, 0, 556, 210, 0, 0, 0, 0, 536, 184, 0, 0, 0, 0, 511, 180, 0, 0, 0, 0, 483, 181, 0, 0, 0, 0, 469, 200, 0, 0, 0, 0, 460, 227, 0, 0, 0, 0, 436, 250, 0, 0, 0, 0, 404, 263, 0, 0, 0, 0, 367, 256, 0, 0, 0, 0, 345, 235, 0, 0, 0, 0, 353, 204, 0, 0, 0, 0, 366, 190, 0, 0, 0, 0, 383, 184, 0, 0, 0, 0, 400, 178, 0, 0, 0, 0, 417, 182, 0, 0, 0, 0, 432, 190, 0, 0, 0, 0, 433, 203, 0, 0, 0, 0, 441, 225, 0, 0, 0, 0, 431, 239, 0, 0, 0, 0, 414, 245, 0, 0, 0, 0, 390, 247, 0, 0, 0, 0, 372, 237, 0, 0, 0, 0, 340, 217, 0, 0, 0, 0, 325, 209, 0, 0, 0, 0, 318, 193, 0, 0, 0, 0, 310, 175, 0, 0, 0, 0, 295, 165, 0, 0, 0, 0, 263, 162, 0, 0, 0, 0, 253, 139, 0, 0, 0, 0, 226, 130, 0, 0, 0, 0, 197, 123, 0, 0, 0, 0, 174, 138, 0, 0, 0, 0, 160, 161, 0, 0, 0, 0, 149, 170, 0, 0, 0, 0, 139, 185, 0, 0, 0, 0, 118, 195, 0, 0, 0, 0, 93, 174, 0, 0, 0, 0, 81, 149, 0, 0, 0, 0, 59, 152, 0, 0, 0, 0, 38, 164, 0, 0, 0, 0, 26, 176, 0, 0, 0, 0, 33, 194, 0, 0, 0, 0, 23, 214, 0, 0, 0, 0, 4, 218, 0, 0, 0, 0, -12, 201, 0, 0, 0, 0, -81, 201)
+}
+point_count = 47
+
+[sub_resource type="Curve2D" id="Curve2D_hb5m1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -73, 706, 0, 0, 0, 0, 9, 659, 0, 0, 0, 0, 25, 639, 0, 0, 0, 0, 41, 643, 0, 0, 0, 0, 55, 636, 0, 0, 0, 0, 76, 632, 0, 0, 0, 0, 90, 645, 0, 0, 0, 0, 94, 661, 0, 0, 0, 0, 107, 668, 0, 0, 0, 0, 120, 680, 0, 0, 0, 0, 122, 694, 0, 0, 0, 0, 132, 714, 0, 0, 0, 0, 145, 718, 0, 0, 0, 0, 171, 731, 0, 0, 0, 0, 190, 727, 0, 0, 0, 0, 208, 730, 0, 0, 0, 0, 226, 720, 0, 0, 0, 0, 231, 706, 0, 0, 0, 0, 234, 688, 0, 0, 0, 0, 245, 676, 0, 0, 0, 0, 261, 668, 0, 0, 0, 0, 269, 650, 0, 0, 0, 0, 282, 639, 0, 0, 0, 0, 301, 640, 0, 0, 0, 0, 313, 652, 0, 0, 0, 0, 332, 649, 0, 0, 0, 0, 343, 661, 0, 0, 0, 0, 343, 678, 0, 0, 0, 0, 326, 690, 0, 0, 0, 0, 321, 710, 0, 0, 0, 0, 325, 734, 0, 0, 0, 0, 339, 749, 0, 0, 0, 0, 357, 746, 0, 0, 0, 0, 376, 756, 0, 0, 0, 0, 397, 749, 0, 0, 0, 0, 414, 741, 0, 0, 0, 0, 419, 723, 0, 0, 0, 0, 423, 702, 0, 0, 0, 0, 413, 684, 0, 0, 0, 0, 394, 652, 0, 0, 0, 0, 416, 626, 0, 0, 0, 0, 438, 595, 0, 0, 0, 0, 482, 587, 0, 0, 0, 0, 521, 595, 0, 0, 0, 0, 527, 626, 0, 0, 0, 0, 504, 645, 0, 0, 0, 0, 509, 674, 0, 0, 0, 0, 537, 698, 0, 0, 0, 0, 638, 698)
+}
+point_count = 49
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hve3p"]
 shader = ExtResource("11_mfdv2")
 shader_parameter/radius = 0.5
 shader_parameter/edge = 0.005
 
-[node name="Game" type="Node2D" unique_id=559046950 node_paths=PackedStringArray("audio")]
+[node name="Game" type="Node2D" unique_id=559046950 node_paths=PackedStringArray("audio") groups=["game_manager"]]
 script = ExtResource("1_80nbo")
 wojak_sprite = ExtResource("2_mfdv2")
 soyjak_sprite = ExtResource("3_mfdv2")
@@ -34,6 +61,41 @@ audio = NodePath("Audio")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=891288190]
 
+[node name="FlyController" type="Node" parent="UI" unique_id=307111322 node_paths=PackedStringArray("audio")]
+unique_name_in_owner = true
+script = ExtResource("8_rvswv")
+audio = NodePath("../../Audio")
+
+[node name="Path2D_1" type="Path2D" parent="UI/FlyController" unique_id=1489327352]
+curve = SubResource("Curve2D_e8heu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="UI/FlyController/Path2D_1" unique_id=1976026757]
+position = Vector2(-159, 229)
+rotates = false
+
+[node name="Path2D_2" type="Path2D" parent="UI/FlyController" unique_id=1998069636]
+curve = SubResource("Curve2D_boyg6")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="UI/FlyController/Path2D_2" unique_id=1238084411]
+position = Vector2(632, 660)
+rotation = -3.1415927
+rotates = false
+
+[node name="Path2D_3" type="Path2D" parent="UI/FlyController" unique_id=1079853522]
+curve = SubResource("Curve2D_e36ub")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="UI/FlyController/Path2D_3" unique_id=1968709329]
+position = Vector2(640, 250)
+rotation = -3.1415927
+rotates = false
+
+[node name="Path2D_4" type="Path2D" parent="UI/FlyController" unique_id=1394573217]
+curve = SubResource("Curve2D_hb5m1")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="UI/FlyController/Path2D_4" unique_id=1209222153]
+position = Vector2(-73, 706)
+rotates = false
+
 [node name="Background" type="Control" parent="UI" unique_id=973495662]
 layout_mode = 3
 anchors_preset = 15
@@ -41,6 +103,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("12_iotsf")
 
 [node name="TextureRect" type="TextureRect" parent="UI/Background" unique_id=96737873]
@@ -50,6 +113,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("11_e8heu")
 
 [node name="QuitButton" type="Button" parent="UI" unique_id=434359032]
@@ -67,7 +131,6 @@ theme = ExtResource("12_iotsf")
 icon = ExtResource("11_lc2xo")
 icon_alignment = 1
 expand_icon = true
-metadata/_edit_use_anchors_ = true
 
 [node name="SoundButton" type="Button" parent="UI" unique_id=419269399]
 unique_name_in_owner = true
@@ -81,7 +144,6 @@ toggle_mode = true
 icon = ExtResource("13_rvswv")
 icon_alignment = 1
 expand_icon = true
-metadata/_edit_use_anchors_ = true
 
 [node name="Top_VBoxContainer" type="VBoxContainer" parent="UI" unique_id=852032032]
 anchors_preset = 10
@@ -123,14 +185,14 @@ vertical_alignment = 1
 [node name="OfflineUpdootsLabel" type="RichTextLabel" parent="UI" unique_id=1681617332]
 unique_name_in_owner = true
 visible = false
-offset_top = 238.0
+offset_top = 226.0
 offset_right = 540.0
-offset_bottom = 261.0
+offset_bottom = 250.0
 theme = ExtResource("12_iotsf")
 theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "You earned PLACEHOLDER points while away!"
+text = "[outline_size=4][outline_color=black]You earned PLACEHOLDER points while away!"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
@@ -164,6 +226,7 @@ texture_normal = ExtResource("2_mfdv2")
 stretch_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=1809763926]
+z_index = 3
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -393,10 +456,12 @@ size_flags_horizontal = 3
 theme = ExtResource("12_iotsf")
 text = "???"
 
-[node name="Audio" type="Node" parent="." unique_id=1454424775 node_paths=PackedStringArray("bgm_player", "sfx_player")]
+[node name="Audio" type="Node" parent="." unique_id=1454424775 node_paths=PackedStringArray("bgm_player", "sfx_player", "fly_player", "squish_player") groups=["audio"]]
 script = ExtResource("14_215e1")
 bgm_player = NodePath("BackgroundAudioStreamPlayer")
-sfx_player = NodePath("SfxAudioStreamPlayer")
+sfx_player = NodePath("ClickAudioStreamPlayer")
+fly_player = NodePath("FlyBuzzAudioStreamPlayer")
+squish_player = NodePath("SquishAudioStreamPlayer")
 
 [node name="BackgroundAudioStreamPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=2119029457]
 stream = ExtResource("15_7sc4i")
@@ -404,8 +469,18 @@ volume_db = -25.0
 autoplay = true
 bus = &"music"
 
-[node name="SfxAudioStreamPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=238743468]
+[node name="ClickAudioStreamPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=238743468]
 stream = ExtResource("16_80cx4")
 volume_db = -29.0
 max_polyphony = 10
+bus = &"sfx"
+
+[node name="FlyBuzzAudioStreamPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=699170296]
+stream = ExtResource("18_boyg6")
+volume_db = -35.0
+bus = &"sfx"
+
+[node name="SquishAudioStreamPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=2079008421]
+stream = ExtResource("18_rvswv")
+volume_db = -10.0
 bus = &"sfx"

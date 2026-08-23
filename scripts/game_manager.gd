@@ -71,6 +71,8 @@ var cosmetic_data: Dictionary = {
 @onready var cosmetic_foldable_container: FoldableContainer = %CosmeticFoldableContainer
 @onready var click_center_container: CenterContainer = %Click_CenterContainer
 
+@onready var fly_controller: Node = %FlyController
+
 var points: float = 0.0
 var offline_points: float = 0.0
 var points_per_second: int = 0
@@ -105,6 +107,8 @@ func _ready() -> void:
 	offline_upgrade_button.button_down.connect(_on_offline_upgrade_button_down)
 	sound_button.toggled.connect(_on_sound_toggled)
 	sound_button.button_pressed = sound_toggle
+	upgrade_foldable_container.folding_changed.connect(_on_folding_changed)
+	cosmetic_foldable_container.folding_changed.connect(_on_folding_changed)
 	
 	wojak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.WOJAK))
 	soyjak_button.button_down.connect(_on_cosmetic_button_down.bind(Cosmetics.SOYJAK))
@@ -286,28 +290,31 @@ func display_offline_points_label() -> void:
 	await tween.finished
 	offline_points_label.hide()
 
+func display_floating_updoot_label(scale: int) -> void:
+	points += points_per_click * scale
+	var ppc_label: RichTextLabel = RichTextLabel.new()
+	var mouse_pos = get_global_mouse_position()
+	#ppc_label.theme = load("res://art/soyjak_theme.tres")
+	ppc_label.fit_content = true
+	ppc_label.bbcode_enabled = true
+	ppc_label.custom_minimum_size = Vector2(100, 25)
+	ppc_label.text = "[font_size=22][color=white][outline_size=4][outline_color=black][img width=20px height=20px]%s[/img] %s" % [upvote_sprite, points_per_click * scale]
+	ppc_label.position = mouse_pos - ppc_label.size / 2.0
+	ppc_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	self.get_child(0).add_child(ppc_label)
+	var position_tween = get_tree().create_tween()
+	position_tween.tween_property(ppc_label, "position:y", mouse_pos.y - LABEL_SPEED, 3)
+	await get_tree().create_timer(2.0).timeout
+	var alpha_tween = get_tree().create_tween()
+	alpha_tween.tween_property(ppc_label, "modulate:a", 0, 1)
+	await alpha_tween.finished
+	ppc_label.queue_free()
+
 #region BUTTON SIGNALS
 func _on_click_button_up() -> void:
 	if click_center_container.hovering:
 		sfx_player.play()
-		points += points_per_click
-		var ppc_label: RichTextLabel = RichTextLabel.new()
-		var mouse_pos = get_global_mouse_position()
-		#ppc_label.theme = load("res://soyjak_theme.tres")
-		ppc_label.text = "[font_size=24][color=white][outline_size=4][outline_color=black][img]%s[/img] %s" % [upvote_sprite, points_per_click]
-		ppc_label.position = mouse_pos
-		ppc_label.bbcode_enabled = true
-		ppc_label.fit_content = true
-		ppc_label.custom_minimum_size = Vector2(100, 25)
-		ppc_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		self.get_child(0).add_child(ppc_label)
-		var position_tween = get_tree().create_tween()
-		position_tween.tween_property(ppc_label, "position:y", mouse_pos.y - LABEL_SPEED, 3)
-		await get_tree().create_timer(2.0).timeout
-		var alpha_tween = get_tree().create_tween()
-		alpha_tween.tween_property(ppc_label, "modulate:a", 0, 1)
-		await alpha_tween.finished
-		ppc_label.queue_free()
+		display_floating_updoot_label(1)
 
 func _on_click_upgrade_button_down() -> void:
 	if points >= click_upgrade_amount:
@@ -391,7 +398,6 @@ func _on_cosmetic_button_down(skin: Cosmetics) -> void:
 	update_cosmetic_labels()
 
 func _on_menu_button_down() -> void:
-	sfx_player.play()
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 func _on_sound_toggled(toggled_on: bool) -> void:
@@ -401,6 +407,9 @@ func _on_sound_toggled(toggled_on: bool) -> void:
 		sound_button.icon = SOUND_OFF
 	else:
 		sound_button.icon = SOUND_ON
+
+func _on_folding_changed(_is_folded: bool) -> void:
+	sfx_player.play()
 #endregion
 
 #region SAVE GAME

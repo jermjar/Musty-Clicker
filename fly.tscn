@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://db2x75j23im2c"]
+
+[ext_resource type="Texture2D" uid="uid://dynlwh4e8tvqv" path="res://art/isaac-fly.png" id="1_mv3iy"]
+[ext_resource type="Script" uid="uid://b6f13gnts01ig" path="res://scripts/fly.gd" id="1_qarim"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvswv"]
+atlas = ExtResource("1_mv3iy")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boyg6"]
+atlas = ExtResource("1_mv3iy")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a7g22"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvswv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boyg6")
+}],
+"loop": 2,
+"name": &"default",
+"speed": 25.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nup64"]
+radius = 25.0
+
+[node name="Fly" type="CharacterBody2D" unique_id=1508776473]
+z_index = 1
+script = ExtResource("1_qarim")
+
+[node name="FlyAnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=795999156]
+z_index = 1
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_a7g22")
+autoplay = "default"
+frame_progress = 0.99419945
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=451004928]
+visible = false
+shape = SubResource("CircleShape2D_nup64")
+disabled = true
+
+[node name="Button" type="Button" parent="." unique_id=1219930704]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(30, 30)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://rbybpd72llwo"]
+
+[ext_resource type="Texture2D" uid="uid://bt06uqgocqsrr" path="res://art/blood-splat.png" id="1_qogo3"]
+[ext_resource type="Script" uid="uid://3fv4rveanlpg" path="res://scripts/blood_splat.gd" id="2_4look"]
+
+[node name="BloodSplat" type="Sprite2D" unique_id=124725288]
+self_modulate = Color(1, 1, 1, 0.78431374)
+texture_filter = 1
+texture = ExtResource("1_qogo3")
+script = ExtResource("2_4look")

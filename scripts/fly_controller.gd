@@ -1,6 +1,8 @@
 extends Node
 
 const FLY = preload("uid://db2x75j23im2c")
+# 2 minutes
+const FLY_INTERVAL = 2 * 60
 
 @export var audio: Node
 @onready var fly_player: AudioStreamPlayer = audio.fly_player
@@ -14,16 +16,10 @@ const FLY = preload("uid://db2x75j23im2c")
 var elapsed_time: float = 0.0
 var path_index: int = 0
 
-## TODO
-## - Make the fly appear every few minutes and save the time/index in save data
-## - Add bug splat gfx
-func _ready() -> void:
-	pass
-
 func _process(delta: float) -> void:
 	elapsed_time += delta
 	
-	if elapsed_time >= 10.0:
+	if elapsed_time >= FLY_INTERVAL:
 		elapsed_time = 0
 		fly(paths[path_index])
 		path_index += 1

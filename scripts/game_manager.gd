@@ -151,30 +151,35 @@ func set_disabled_for_buttons() -> void:
 	elif points < offline_upgrade_amount and not offline_upgrade_button.disabled:
 		offline_upgrade_button.disabled = true
 	
-	if points >= int(soyjak_button.text) and soyjak_button.disabled:
-		soyjak_button.disabled = false
-	elif points < int(soyjak_button.text) and not soyjak_button.disabled:
-		soyjak_button.disabled = true
-		
-	if points >= int(cobson_button.text) and cobson_button.disabled:
-		cobson_button.disabled = false
-	elif points < int(cobson_button.text) and not cobson_button.disabled:
-		cobson_button.disabled = true
+	if not cosmetic_data[Cosmetics.SOYJAK]:
+		if points >= int(soyjak_button.text) and soyjak_button.disabled:
+			soyjak_button.disabled = false
+		elif points < int(soyjak_button.text) and not soyjak_button.disabled:
+			soyjak_button.disabled = true
 	
-	if points >= int(chudjak_button.text) and chudjak_button.disabled:
-		chudjak_button.disabled = false
-	elif points < int(chudjak_button.text) and not chudjak_button.disabled:
-		chudjak_button.disabled = true
+	if not cosmetic_data[Cosmetics.COBSON]:
+		if points >= int(cobson_button.text) and cobson_button.disabled:
+			cobson_button.disabled = false
+		elif points < int(cobson_button.text) and not cobson_button.disabled:
+			cobson_button.disabled = true
 	
-	if points >= int(gapejak_button.text) and gapejak_button.disabled:
-		gapejak_button.disabled = false
-	elif points < int(gapejak_button.text) and not gapejak_button.disabled:
-		gapejak_button.disabled = true
+	if not cosmetic_data[Cosmetics.CHUDJAK]:
+		if points >= int(chudjak_button.text) and chudjak_button.disabled:
+			chudjak_button.disabled = false
+		elif points < int(chudjak_button.text) and not chudjak_button.disabled:
+			chudjak_button.disabled = true
 	
-	if points >= redacted_amount and redacted_button.disabled:
-		redacted_button.disabled = false
-	elif points < redacted_amount and not redacted_button.disabled:
-		redacted_button.disabled = true
+	if not cosmetic_data[Cosmetics.GAPEJAK]:
+		if points >= int(gapejak_button.text) and gapejak_button.disabled:
+			gapejak_button.disabled = false
+		elif points < int(gapejak_button.text) and not gapejak_button.disabled:
+			gapejak_button.disabled = true
+	
+	if not cosmetic_data[Cosmetics.REDACTED]:
+		if points >= redacted_amount and redacted_button.disabled:
+			redacted_button.disabled = false
+		elif points < redacted_amount and not redacted_button.disabled:
+			redacted_button.disabled = true
 
 func update_upgrade_text() -> void:
 	click_upgrade_button.text = str(click_upgrade_amount)
@@ -290,15 +295,15 @@ func display_offline_points_label() -> void:
 	await tween.finished
 	offline_points_label.hide()
 
-func display_floating_updoot_label(scale: int) -> void:
-	points += points_per_click * scale
+func display_floating_updoot_label(point_scale: int) -> void:
+	points += points_per_click * point_scale
 	var ppc_label: RichTextLabel = RichTextLabel.new()
 	var mouse_pos = get_global_mouse_position()
 	#ppc_label.theme = load("res://art/soyjak_theme.tres")
 	ppc_label.fit_content = true
 	ppc_label.bbcode_enabled = true
 	ppc_label.custom_minimum_size = Vector2(100, 25)
-	ppc_label.text = "[font_size=22][color=white][outline_size=4][outline_color=black][img width=20px height=20px]%s[/img] %s" % [upvote_sprite, points_per_click * scale]
+	ppc_label.text = "[font_size=22][color=white][outline_size=4][outline_color=black][img width=20px height=20px]%s[/img] %s" % [upvote_sprite, points_per_click * point_scale]
 	ppc_label.position = mouse_pos - ppc_label.size / 2.0
 	ppc_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	self.get_child(0).add_child(ppc_label)
@@ -429,7 +434,9 @@ func save_game() -> void:
 		"upgrade_foldable": upgrade_foldable_container.folded,
 		"cosmetic_foldable": cosmetic_foldable_container.folded,
 		"show_redacted_amount": show_redacted_amount,
-		"sound_toggle": sound_toggle
+		"sound_toggle": sound_toggle,
+		"path_index": fly_controller.path_index,
+		"elapsed_time": fly_controller.elapsed_time
 	}
 	var file_access: FileAccess = FileAccess.open(save_path, FileAccess.WRITE)
 	file_access.store_string(JSON.stringify(save_data, "\t", false))
@@ -456,6 +463,8 @@ func load_game() -> void:
 		cosmetic_foldable_container.folded = save_data["cosmetic_foldable"]
 		show_redacted_amount = save_data["show_redacted_amount"]
 		sound_toggle = save_data["sound_toggle"]
+		fly_controller.path_index = save_data["path_index"]
+		fly_controller.elapsed_time = save_data["elapsed_time"]
 		
 		var current_time = Time.get_unix_time_from_system()
 		var elapsed = current_time - save_data["last_saved_time"]

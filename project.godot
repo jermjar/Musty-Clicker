@@ -10,11 +10,11 @@ config_version=5
 
 [application]
 
-config/name="Musty Clicker"
+config/name="Soyjak Clicker"
 run/main_scene="uid://c0tlpmol6slto"
 config/features=PackedStringArray("4.7", "Mobile")
 run/max_fps=60
-config/icon="res://art/icon.svg"
+config/icon="uid://b4nxrst4roeva"
 
 [audio]
 

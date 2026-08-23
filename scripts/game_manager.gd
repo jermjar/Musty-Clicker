@@ -83,6 +83,7 @@ var pps_upgrade_amount: int = 500
 var click_upgrade_scale: int = 50
 var pps_upgrade_scale: int = 500
 var offline_upgrade_amount: int = 5000
+var redacted_amount: int = 25000000
 
 var offline_hours: OfflineHours = OfflineHours.ZERO
 var offline_button_disabled: bool = false
@@ -121,7 +122,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	points += points_per_second * delta
 	update_labels()
-	set_disabled_for_upgrade_buttons()
+	set_disabled_for_buttons()
 	
 	if points >= 9000000 and not show_redacted_amount:
 		show_redacted_amount = true
@@ -130,7 +131,7 @@ func _process(delta: float) -> void:
 		stop_process_check = true
 		update_cosmetic_labels()
 
-func set_disabled_for_upgrade_buttons() -> void:
+func set_disabled_for_buttons() -> void:
 	if points >= click_upgrade_amount and click_upgrade_button.disabled:
 		click_upgrade_button.disabled = false
 	elif points < click_upgrade_amount and not click_upgrade_button.disabled:
@@ -140,6 +141,36 @@ func set_disabled_for_upgrade_buttons() -> void:
 		pps_upgrade_button.disabled = false
 	elif points < pps_upgrade_amount and not pps_upgrade_button.disabled:
 		pps_upgrade_button.disabled = true
+	
+	if points >= offline_upgrade_amount and offline_upgrade_button.disabled:
+		offline_upgrade_button.disabled = false
+	elif points < offline_upgrade_amount and not offline_upgrade_button.disabled:
+		offline_upgrade_button.disabled = true
+	
+	if points >= int(soyjak_button.text) and soyjak_button.disabled:
+		soyjak_button.disabled = false
+	elif points < int(soyjak_button.text) and not soyjak_button.disabled:
+		soyjak_button.disabled = true
+		
+	if points >= int(cobson_button.text) and cobson_button.disabled:
+		cobson_button.disabled = false
+	elif points < int(cobson_button.text) and not cobson_button.disabled:
+		cobson_button.disabled = true
+	
+	if points >= int(chudjak_button.text) and chudjak_button.disabled:
+		chudjak_button.disabled = false
+	elif points < int(chudjak_button.text) and not chudjak_button.disabled:
+		chudjak_button.disabled = true
+	
+	if points >= int(gapejak_button.text) and gapejak_button.disabled:
+		gapejak_button.disabled = false
+	elif points < int(gapejak_button.text) and not gapejak_button.disabled:
+		gapejak_button.disabled = true
+	
+	if points >= redacted_amount and redacted_button.disabled:
+		redacted_button.disabled = false
+	elif points < redacted_amount and not redacted_button.disabled:
+		redacted_button.disabled = true
 
 func update_upgrade_text() -> void:
 	click_upgrade_button.text = str(click_upgrade_amount)
@@ -240,7 +271,7 @@ func update_cosmetic_labels() -> void:
 			redacted_button.disabled = false
 	else:
 		if show_redacted_amount:
-			redacted_button.text = str(25000000)
+			redacted_button.text = str(redacted_amount)
 			redacted_label.text = "Tony Soprano Soyjak"
 		else:
 			redacted_button.text = "???"
@@ -263,7 +294,7 @@ func _on_click_button_up() -> void:
 		var ppc_label: RichTextLabel = RichTextLabel.new()
 		var mouse_pos = get_global_mouse_position()
 		#ppc_label.theme = load("res://soyjak_theme.tres")
-		ppc_label.text = "[color=white][outline_size=4][outline_color=black][img]%s[/img] %s" % [upvote_sprite, points_per_click]
+		ppc_label.text = "[font_size=24][color=white][outline_size=4][outline_color=black][img]%s[/img] %s" % [upvote_sprite, points_per_click]
 		ppc_label.position = mouse_pos
 		ppc_label.bbcode_enabled = true
 		ppc_label.fit_content = true
@@ -352,8 +383,8 @@ func _on_cosmetic_button_down(skin: Cosmetics) -> void:
 				update_cosmetic(skin)
 				cosmetic_data[Cosmetics.GAPEJAK] = true
 		Cosmetics.REDACTED:
-			if points >= int(redacted_button.text):
-				points -= int(redacted_button.text)
+			if points >= redacted_amount:
+				points -= redacted_amount
 				update_cosmetic(skin)
 				cosmetic_data[Cosmetics.REDACTED] = true
 	sfx_player.play()
@@ -429,4 +460,10 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		save_game()
 		get_tree().quit()
+	elif what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
+		save_game()
+	elif what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+		save_game()
+	elif what == NOTIFICATION_CRASH:
+		save_game()
 #endregion

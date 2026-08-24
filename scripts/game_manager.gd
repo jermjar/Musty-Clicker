@@ -100,6 +100,9 @@ func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	get_window().unresizable = true
 	
+	if OS.has_feature("web"):
+		menu_button.visible = false
+	
 	# Button signals
 	click_button.button_up.connect(_on_click_button_up)
 	menu_button.button_down.connect(_on_menu_button_down)
@@ -413,11 +416,6 @@ func _on_cosmetic_button_down(skin: Cosmetics) -> void:
 	update_cosmetic_labels()
 
 func _on_menu_button_down() -> void:
-	if OS.has_feature("mobile") or OS.has_feature("web"):
-		if DisplayServer.window_get_mode(DisplayServer.WINDOW_MODE_FULLSCREEN) or DisplayServer.window_get_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN):
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		return
-	
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 func _on_sound_toggled(toggled_on: bool) -> void:

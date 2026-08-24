@@ -15,9 +15,17 @@ const FLY_INTERVAL = 2 * 60
 
 var elapsed_time: float = 0.0
 var path_index: int = 0
+var last_tick: int = 0
+
+func _ready() -> void:
+	last_tick = Time.get_ticks_msec()
 
 func _process(delta: float) -> void:
-	elapsed_time += delta
+	var current_tick := Time.get_ticks_msec()
+	var frame_time := (current_tick - last_tick) / 1000.0
+	last_tick = current_tick
+	
+	elapsed_time += frame_time
 	
 	if elapsed_time >= FLY_INTERVAL:
 		elapsed_time = 0

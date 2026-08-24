@@ -79,6 +79,7 @@ var points_per_second: int = 0
 var points_per_click: int = 1
 var click_scale: int = 1
 var pps_scale: int = 1
+var autosave_timer: float = 0.0
 
 var click_upgrade_amount: int = 50
 var pps_upgrade_amount: int = 500
@@ -134,6 +135,12 @@ func _process(delta: float) -> void:
 	if show_redacted_amount and not stop_process_check:
 		stop_process_check = true
 		update_cosmetic_labels()
+	
+	autosave_timer += delta
+
+	if autosave_timer >= 5.0:
+		autosave_timer = 0.0
+		save_game()
 
 func set_disabled_for_buttons() -> void:
 	if points >= click_upgrade_amount and click_upgrade_button.disabled:

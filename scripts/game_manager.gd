@@ -153,10 +153,11 @@ func set_disabled_for_buttons() -> void:
 	elif points < pps_upgrade_amount and not pps_upgrade_button.disabled:
 		pps_upgrade_button.disabled = true
 	
-	if points >= offline_upgrade_amount and offline_upgrade_button.disabled:
-		offline_upgrade_button.disabled = false
-	elif points < offline_upgrade_amount and not offline_upgrade_button.disabled:
-		offline_upgrade_button.disabled = true
+	if not offline_button_disabled:
+		if points >= offline_upgrade_amount and offline_upgrade_button.disabled:
+			offline_upgrade_button.disabled = false
+		elif points < offline_upgrade_amount and not offline_upgrade_button.disabled:
+			offline_upgrade_button.disabled = true
 	
 	if not cosmetic_data[Cosmetics.SOYJAK]:
 		if points >= int(soyjak_button.text) and soyjak_button.disabled:
@@ -197,6 +198,7 @@ func update_upgrade_text() -> void:
 	if offline_button_disabled:
 		offline_upgrade_label.text = "Offline Hours Upgrade (8 Hours)"
 		offline_upgrade_button.text = "PURCHASED"
+		offline_upgrade_button.disabled = true
 
 func update_labels() -> void:
 	points_label.text = "[outline_size=4][outline_color=black]%s updoots" % [int(points)]
@@ -314,6 +316,7 @@ func display_floating_updoot_label(point_scale: int) -> void:
 	ppc_label.position = mouse_pos - ppc_label.size / 2.0
 	ppc_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	self.get_child(0).add_child(ppc_label)
+	ppc_label.position.x = ppc_label.position.x - 25
 	var position_tween = get_tree().create_tween()
 	position_tween.tween_property(ppc_label, "position:y", mouse_pos.y - LABEL_SPEED, 3)
 	await get_tree().create_timer(2.0).timeout

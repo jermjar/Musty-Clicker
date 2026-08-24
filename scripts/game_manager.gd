@@ -413,6 +413,11 @@ func _on_cosmetic_button_down(skin: Cosmetics) -> void:
 	update_cosmetic_labels()
 
 func _on_menu_button_down() -> void:
+	if OS.has_feature("mobile"):
+		if DisplayServer.window_get_mode(DisplayServer.WINDOW_MODE_FULLSCREEN) or DisplayServer.window_get_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN):
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		return
+	
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 func _on_sound_toggled(toggled_on: bool) -> void:
